@@ -1,0 +1,36 @@
+{
+  "name": "restor-api",
+  "version": "1.0.0",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "gulp && build",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "@types/body-parser": "^1.16.4",
+    "@types/chai": "^3.4.34",
+    "@types/debug": "^0.0.29",
+    "@types/mocha": "^2.2.32",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^8.0.30",
+    "@types/restify": "^5.0.4",
+    "@types/sinon": "^1.16.31",
+    "@types/uuid": "^3.4.2",
+    "debug": "^2.6.8",
+    "dtrace-provider": "^0.8.5",
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.3.0",
+    "gulp-open": "^2.0.0",
+    "gulp-typescript": "^3.2.1",
+    "moment": "^2.19.3",
+    "mysql": "^2.15.0",
+    "node-ts-cache": "^0.0.7",
+    "oauth2-server": "^3.0.0",
+    "reflect-metadata": "^0.1.10",
+    "restify": "^5.2.0",
+    "typeorm": "^0.1.0-alpha.47",
+    "typescript": "^2.5.2",
+    "uuid": "^3.1.0"
+  }
+}
