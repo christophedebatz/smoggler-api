@@ -39,13 +39,11 @@ export default class UserService {
    * @returns the user.
    */
   public authenticateUser(userFbId:string, userFbAccessToken:string):Promise<User> {
+    // console.log('userFbId=', userFbId, ', userFbAccessToken=', userFbAccessToken);
     return UserDao.getByFbIdAndAccessToken(userFbId, userFbAccessToken)
       .then(user => {
         if (user) return user;
         throw new ServiceException(ServiceErrorCodes.UNAUTHORIZED);
-      })
-      .catch(err => {
-        throw new ServiceException(ServiceErrorCodes.UNEXPECTED_ERROR, err.message);
       });
   }
 

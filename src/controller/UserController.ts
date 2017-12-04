@@ -44,17 +44,26 @@ export default class UserController {
     if (req.method.toLowerCase() === 'post' && req.path().includes('/users')) {
       return next();
     }
-
     logger.info('[UserController] Authenticating user.');
 
+    let hasError = false;
     const authorization = req.header('Authorization');
     if (authorization) {
       let split = authorization.split('-');
       if (split.length === 2) {
-        return next(this.service.authenticateUser(split[0], split[1]));
+        this.service.authenticateUser(split[0], split[1])
+          .then(user => next(user))
+          .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));
+      } else {
+        hasError = true;
       }
+    } else {
+      hasError = true;
     }
-    res.json(401, new ApiException('invalid.authorization', 'Inexistant or invalid authorization header token.'));
+
+    if (hasError) {
+      res.json(401, new ApiException('invalid.authorization', 'Inexistant or invalid authorization header token.'));
+    }
   }
 
 }
