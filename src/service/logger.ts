@@ -5,13 +5,12 @@ let infoStream = new stream.Writable();
 infoStream.writable = true;
 
 infoStream.write = (info: any): boolean => {
-
   console.log(JSON.parse(info).msg);
   return true;
 };
 
 export let logger = bunyan.createLogger({
-  name: 'myapp',
+  name: 'smoggler',
   streams: [
     {
       level: 'info',

@@ -11,6 +11,7 @@ export default class UserController {
 
   constructor() {
     this.createUser = this.createUser.bind(this);
+    this.authenticateUser = this.authenticateUser.bind(this);
   }
 
   /*
@@ -26,7 +27,7 @@ export default class UserController {
     const user:User = UserMapper.map(req);
 
     this.service.createUser(user)
-      .then(user => next(user))
+      .then(user => res.json(201, user))
       .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));
   }
 
@@ -39,6 +40,7 @@ export default class UserController {
    * @returns the authenticated user.
    */
   public authenticateUser(req: Request, res: Response, next: Next):void {
+    // only the subcribe route have to be public
     if (req.method.toLowerCase() === 'post' && req.path().includes('/users')) {
       return next();
     }
@@ -52,7 +54,7 @@ export default class UserController {
         return next(this.service.authenticateUser(split[0], split[1]));
       }
     }
-    throw new ApiException('invalid.authorization', 'Inexistant or invalid authorization header token.');
+    res.json(401, new ApiException('invalid.authorization', 'Inexistant or invalid authorization header token.'));
   }
 
 }

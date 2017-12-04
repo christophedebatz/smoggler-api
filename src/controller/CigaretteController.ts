@@ -25,7 +25,7 @@ export default class CigaretteController {
    * @param next the next filter.
    * @returns the created user.
    */
-  public async getUserCigarettes(req: Request, res: Response, next: Next):Promise<Cigarette[]> {
+  public getUserCigarettes(req: Request, res: Response, next: Next):void {
     logger.info(`[CigaretteController] Fetching user id = ${req.params.userFbId} cigarettes.`);
     const userFbId:string = req.params.userFbId;
 
@@ -33,11 +33,11 @@ export default class CigaretteController {
       throw new ApiException('invalid.user.id');
     }
 
-    let fromDate:Date = (req.body.from) ? moment.parseZone(req.body.from).toDate() : undefined;
-    let toDate:Date = (req.body.to) ? moment.parseZone(req.body.to).toDate() : undefined;
+    const fromDate:Date = (req.body.from) ? moment.parseZone(req.body.from).toDate() : undefined;
+    const toDate:Date = (req.body.to) ? moment.parseZone(req.body.to).toDate() : undefined;
 
-    return this.cigaretteService.getUserCigarettes(userFbId, fromDate, toDate)
-      .then(cigarettes => next(cigarettes))
+    this.cigaretteService.getUserCigarettes(userFbId, fromDate, toDate)
+      .then(cigarettes => res.json(200, cigarettes))
       .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));
   }
 
@@ -49,7 +49,7 @@ export default class CigaretteController {
    * @param next the next filter.
    * @returns the created user.
    */
-  public async addCigarettes(req: Request, res: Response, next: Next):Promise<Cigarette[]> {
+  public addCigarettes(req: Request, res: Response, next: Next):void {
     logger.info(`[CigaretteController] Smoking for user id = ${req.params.userFbId}.`);
     const userFbId:string = req.params.userFbId;
 
@@ -60,7 +60,7 @@ export default class CigaretteController {
     let fromDate:Date = (req.body.from) ? moment.parseZone(req.body.from).toDate() : undefined;
     let toDate:Date = (req.body.to) ? moment.parseZone(req.body.to).toDate() : undefined;
 
-    return this.cigaretteService.getUserCigarettes(userFbId, fromDate, toDate)
+    this.cigaretteService.getUserCigarettes(userFbId, fromDate, toDate)
       .then(cigarettes => next(cigarettes))
       .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));
   }
