@@ -14,11 +14,11 @@ export const CigaretteDao = {
           .where('user.fbId = :userFbId', { userFbId });
 
         if (from) {
-          qb.andWhere('creation_date > :from', { from });
+          qb.andWhere('creationDate > :from', { from });
         }
-        
+
         if (to) {
-          qb.andWhere('creation_date < :to', { to });
+          qb.andWhere('creationDate < :to', { to });
         }
 
         return qb.getMany();

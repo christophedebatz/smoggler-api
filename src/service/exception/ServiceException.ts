@@ -49,6 +49,8 @@ export const ServiceErrorCodes = {
 
   USER_CREATION_DUPLICATE: { name: 'user.creation.duplicate', code: 409 },
 
+  INVALID_INPUT_RANGE: { name: 'invalid.input.range', code: 400 },
+
   EMPTY_INPUT: { name: 'user.create.empty', code: 400 },
 
   UNAUTHORIZED: { name: 'unauthorized', code: 401 },
