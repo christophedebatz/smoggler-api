@@ -20,15 +20,15 @@ export default class Cigarette {
 
 export const Sentiment = {
 
-  HAPPY: 1,
+  HAPPY: 'HPY',
 
-  DRUNK: 2,
+  DRUNK: 'DRK',
 
-  NOSTALGIC: 3,
+  NOSTALGIC: 'NTG',
 
-  SICK: 4,
+  SICK: 'SCK',
 
-  NOT_HAPPY: 5,
+  NOT_HAPPY: 'NHP',
 
-  CHILLING: 6
+  CHILLING: 'CHL'
 };

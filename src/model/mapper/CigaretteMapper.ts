@@ -1,5 +1,5 @@
 import * as restify from 'restify';
-import Cigarette from '../entity/Cigarette';
+import Cigarette, { Sentiment } from '../entity/Cigarette';
 import User from '../entity/User';
 
 export default class CigaretteMapper {
@@ -29,10 +29,32 @@ export default class CigaretteMapper {
       cigarette.user = user;
     }
     if (input.sentiment) {
-      cigarette.sentiment = input.sentiment;
+      cigarette.sentiment = CigaretteMapper.mapSentiment(input.sentiment.toString());
     }
     cigarette.creationDate = new Date();
     return cigarette;
+  }
+
+  private static mapSentiment(input:string):string {
+    if (input) {
+      switch (input.toLowerCase()) {
+        case 'happy':
+          return Sentiment.HAPPY;
+        case 'not-happy':
+          return Sentiment.NOT_HAPPY;
+        case 'nostalgic':
+          return Sentiment.NOSTALGIC;
+        case 'chilling':
+          return Sentiment.CHILLING;
+        case 'drunk':
+          return Sentiment.DRUNK;
+        case 'sick':
+          return Sentiment.SICK;
+        default:
+          return null;
+      }
+    }
+    return null;
   }
 
 }
