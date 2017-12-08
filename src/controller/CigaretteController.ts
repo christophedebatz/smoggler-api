@@ -5,6 +5,7 @@ import UserService from '../service/UserService';
 import User from '../model/entity/User';
 import Cigarette from '../model/entity/Cigarette';
 import UserMapper from '../model/mapper/UserMapper';
+import CigaretteMapper from '../model/mapper/CigaretteMapper';
 import ApiException from './exception/ApiException';
 import * as moment from 'moment';
 
@@ -57,12 +58,10 @@ export default class CigaretteController {
       throw new ApiException('invalid.user.id');
     }
 
-    let fromDate:Date = (req.body.from) ? moment.parseZone(req.body.from).toDate() : undefined;
-    let toDate:Date = (req.body.to) ? moment.parseZone(req.body.to).toDate() : undefined;
-
-    this.cigaretteService.getUserCigarettes(userFbId, fromDate, toDate)
-      .then(cigarettes => next(cigarettes))
-      .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));
+    this.userService.getUserByFbId(userFbId)
+      .then((user:User) => CigaretteMapper.mapMany(user, req))
+      .then((cigarettes:Cigarette[]) => this.cigaretteService.addCigarettes(cigarettes))
+      .then(() => res.send(204));
   }
 
 }

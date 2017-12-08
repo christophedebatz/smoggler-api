@@ -27,4 +27,14 @@ export default class UserService {
     return CigaretteDao.getUserCigarettes(userFbId, from, to);
   }
 
+  /*
+   * Creates a new user with constistancy checks before.
+   *
+   * @param user the user to store.
+   * @returns the created user.
+   */
+  public addCigarettes(cigarettes:Cigarette[]) {
+
+  }
+
 }

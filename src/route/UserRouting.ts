@@ -8,7 +8,7 @@ function userRouting(api:restify.Server) {
 
   api.post('/api/users', userController.createUser);
   api.get('/api/users/:userFbId/cigarettes', cigaretteController.getUserCigarettes);
-  // api.post('/api/users/:userFbId/cigarettes', cigaretteController.addCigarettes);
+  api.post('/api/users/:userFbId/cigarettes', cigaretteController.addCigarettes);
 }
 
 module.exports.routes = userRouting;
