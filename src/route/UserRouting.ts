@@ -2,17 +2,19 @@ import * as restify from 'restify';
 import UserController from '../controller/UserController';
 import CigaretteController from '../controller/CigaretteController';
 
-function userRouting(api:restify.Server) {
-  const userController:UserController = new UserController();
-  const cigaretteController:CigaretteController = new CigaretteController();
+module.exports.route = {
 
-  // public resources
-  api.post('/api/users', userController.createUser);
+  initialize(api:restify.Server) {
+    const userController:UserController = new UserController();
+    const cigaretteController:CigaretteController = new CigaretteController();
 
-  // protected resources
-  api.get('/api/me', userController.getUser);
-  api.get('/api/me/cigarettes', cigaretteController.getUserCigarettes);
-  api.post('/api/me/cigarettes', cigaretteController.addCigarettes);
-}
+    // public resources
+    api.post('/api/users', userController.createUser);
 
-module.exports.routes = userRouting;
+    // protected resources
+    api.get('/api/me', userController.getUser);
+    api.get('/api/me/cigarettes', cigaretteController.getUserCigarettes);
+    api.post('/api/me/cigarettes', cigaretteController.addCigarettes);
+  }
+
+};

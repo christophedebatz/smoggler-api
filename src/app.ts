@@ -21,10 +21,10 @@ api.use(restify.plugins.queryParser());
 api.use(restify.plugins.fullResponse());
 api.use(authFilter.authenticateUser);
 
-fs.readdirSync(__dirname + '/route').forEach((routeConfig: string): void => {
-  if (routeConfig.substr(-3) === '.js') {
-    const route = require(__dirname + '/route/' + routeConfig);
-    route.routes(api);
+fs.readdirSync(__dirname + '/route').forEach((routeFile: string): void => {
+  if (routeFile.substr(-3) === '.js') {
+    const routes = require(__dirname + '/route/' + routeFile);
+    routes.route.initialize(api);
   }
 });
 
