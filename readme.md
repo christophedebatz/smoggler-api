@@ -4,7 +4,6 @@ Welcome to Smoggler API
 
 Smoggler is a mobile app which allow user being aware of its own tobacco consumption.
 
-----------
 
 
 API documentation
@@ -64,8 +63,8 @@ You can add one or several cigarette by requesting the user-cigarettes endpoint 
 ]
 ```
 
- > - The `creationDate`parameter is optional. If you don't pass it to request, it will equals to the current time.
- > - The `sentiment` parameter is optional. If you don't pass it to request, it will remains `NULL`.
+ > - The `creationDate`parameter is optional. If present the format must respect the ISO-8601 ( https://fr.wikipedia.org/wiki/ISO_8601 ). If not present, it will equals to the current time.
+ > - The `sentiment` parameter is optional. If not present, it will remains `NULL`.
  > - The available sentiments list is:
 
  >  - `happy`

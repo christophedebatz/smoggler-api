@@ -52,7 +52,10 @@ export default class UserController {
       let split = authorization.split('-');
       if (split.length === 2) {
         this.service.authenticateUser(split[0], split[1])
-          .then(user => next(user))
+          .then(user => {
+            res.set('userFbId', user.fbId);
+            next();
+          })
           .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));
       } else {
         hasError = true;

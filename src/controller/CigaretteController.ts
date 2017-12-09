@@ -27,9 +27,8 @@ export default class CigaretteController {
    * @returns the created user.
    */
   public getUserCigarettes(req: Request, res: Response, next: Next):void {
-    logger.info(`[CigaretteController] Fetching user id = ${req.params.userFbId} cigarettes.`);
-    const userFbId:string = req.params.userFbId;
-
+    logger.info(`[CigaretteController] Fetching user id = ${res.get('userFbId')} cigarettes.`);
+    const userFbId:string = res.get('userFbId');
     if (!userFbId) {
       throw new ApiException('invalid.user.id');
     }
@@ -51,8 +50,8 @@ export default class CigaretteController {
    * @returns the created user.
    */
   public addCigarettes(req: Request, res: Response, next: Next):void {
-    logger.info(`[CigaretteController] Smoking for user id = ${req.params.userFbId}.`);
-    const userFbId:string = req.params.userFbId;
+    logger.info(`[CigaretteController] Smoking for user id = ${res.get('userFbId')}.`);
+    const userFbId:string = res.get('userFbId');
 
     if (!userFbId) {
       throw new ApiException('invalid.user.id');

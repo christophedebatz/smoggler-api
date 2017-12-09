@@ -7,8 +7,8 @@ function userRouting(api:restify.Server) {
   const cigaretteController:CigaretteController = new CigaretteController();
 
   api.post('/api/users', userController.createUser);
-  api.get('/api/users/:userFbId/cigarettes', cigaretteController.getUserCigarettes);
-  api.post('/api/users/:userFbId/cigarettes', cigaretteController.addCigarettes);
+  api.get('/api/me/cigarettes', cigaretteController.getUserCigarettes);
+  api.post('/api/me/cigarettes', cigaretteController.addCigarettes);
 }
 
 module.exports.routes = userRouting;
