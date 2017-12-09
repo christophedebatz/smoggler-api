@@ -1,4 +1,4 @@
-import ServiceException from '../../service/exception/ServiceException';
+import { ServiceErrorCodes } from '../../service/exception/ServiceException';
 
 export default class ApiException {
 
@@ -16,4 +16,7 @@ export default class ApiException {
     }
   }
 
+  public static fromServiceCode(code:any):ApiException {
+    return new ApiException(code.name);
+  }
 }

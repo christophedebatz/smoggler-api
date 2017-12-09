@@ -31,7 +31,7 @@ export default class UserAuthFilter {
     let hasError = false;
     const authorization = req.header('Authorization');
     if (authorization) {
-      let split = authorization.split('-');
+      const split = authorization.split('-');
       if (split.length === 2) {
         this.service.authenticateUser(split[0], split[1])
           .then(user => {

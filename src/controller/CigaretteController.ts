@@ -1,4 +1,5 @@
 import { Request, Response, Next } from 'restify';
+import * as moment from 'moment';
 import { logger } from '../service/logger';
 import CigaretteService from '../service/CigaretteService';
 import UserService from '../service/UserService';
@@ -7,7 +8,7 @@ import Cigarette from '../model/entity/Cigarette';
 import UserMapper from '../model/mapper/UserMapper';
 import CigaretteMapper from '../model/mapper/CigaretteMapper';
 import ApiException from './exception/ApiException';
-import * as moment from 'moment';
+import { ServiceErrorCodes } from '../service/exception/ServiceException';
 
 export default class CigaretteController {
 
@@ -16,6 +17,7 @@ export default class CigaretteController {
 
   constructor() {
     this.getUserCigarettes = this.getUserCigarettes.bind(this);
+    this.addCigarettes = this.addCigarettes.bind(this);
   }
 
   /*
@@ -29,8 +31,9 @@ export default class CigaretteController {
   public getUserCigarettes(req: Request, res: Response, next: Next):void {
     logger.info(`[CigaretteController] Fetching user id = ${res.get('userFbId')} cigarettes.`);
     const userFbId:string = res.get('userFbId');
+
     if (!userFbId) {
-      throw new ApiException('invalid.user.id');
+      throw ApiException.fromServiceCode(ServiceErrorCodes.USER_NOT_FOUND);
     }
 
     const fromDate:Date = (req.query.from) ? moment(req.query.from).toDate() : undefined;
@@ -54,7 +57,7 @@ export default class CigaretteController {
     const userFbId:string = res.get('userFbId');
 
     if (!userFbId) {
-      throw new ApiException('invalid.user.id');
+      throw ApiException.fromServiceCode(ServiceErrorCodes.USER_NOT_FOUND);
     }
 
     this.userService.getUserByFbId(userFbId)
