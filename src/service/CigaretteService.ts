@@ -12,29 +12,39 @@ export default class UserService {
   private static MAX_DAYS_QUERY = 10;
 
   /*
-   * Creates a new user with constistancy checks before.
+   * Returns the user cigarettes for a period.
    *
-   * @param user the user to store.
-   * @returns the created user.
+   * @param userFbId the user facebook id.
+   * @returns the user cigarettes.
    */
   public getUserCigarettes(userFbId:string, from:Date, to:Date):Promise<Cigarette[]> {
-    const duration = moment.duration(moment(to).diff(moment(from))).asDays();
+    const duration:number = moment.duration(moment(to).diff(moment(from))).asDays();
 
     if (duration > UserService.MAX_DAYS_QUERY) {
-      throw new ServiceException(ServiceErrorCodes.INVALID_INPUT_RANGE);
+      throw ServiceException.create(
+        ServiceErrorCodes.INVALID_INPUT_RANGE,
+        `You can fetch a maximum of ${UserService.MAX_DAYS_QUERY} day(s) of data.`
+      );
     }
 
     return CigaretteDao.getUserCigarettes(userFbId, from, to);
   }
 
   /*
-   * Creates a new user with constistancy checks before.
+   * Save a collection of new cigarettes.
    *
-   * @param user the user to store.
-   * @returns the created user.
+   * @param cigarettes the cigarettes to save.
+   * @returns the saved cigarettes.
    */
-  public addCigarettes(cigarettes:Cigarette[]) {
+  public addCigarettes(cigarettes:Cigarette[]):Promise<Cigarette[]> {
+    if (cigarettes.length > 500) {
+      throw ServiceException.create(
+        ServiceErrorCodes.TOO_MANY_ITEMS,
+        'You can push maximum 500 items per request.'
+      );
+    }
 
+    return CigaretteDao.addCigarettes(cigarettes);
   }
 
 }

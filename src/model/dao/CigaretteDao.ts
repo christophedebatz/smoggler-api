@@ -22,6 +22,12 @@ export const CigaretteDao = {
         }
 
         return qb.getMany();
-      });
+      }
+    );
+  },
+
+  addCigarettes(cigarettes:Cigarette[]):Promise<Cigarette[]> {
+    return Database.getInstance()
+      .then(async connection => await connection.getRepository(Cigarette).save(cigarettes));
   }
 }

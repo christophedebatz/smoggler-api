@@ -19,12 +19,12 @@ export default class CigaretteController {
   }
 
   /*
-   * Create a new user.
+   * Returns the user cigarettes for a period.
    *
    * @param req  the request.
    * @param res  the response.
    * @param next the next filter.
-   * @returns the created user.
+   * @returns the suer cigarettes.
    */
   public getUserCigarettes(req: Request, res: Response, next: Next):void {
     logger.info(`[CigaretteController] Fetching user id = ${res.get('userFbId')} cigarettes.`);
@@ -33,8 +33,8 @@ export default class CigaretteController {
       throw new ApiException('invalid.user.id');
     }
 
-    const fromDate:Date = (req.body.from) ? moment.parseZone(req.body.from).toDate() : undefined;
-    const toDate:Date = (req.body.to) ? moment.parseZone(req.body.to).toDate() : undefined;
+    const fromDate:Date = (req.query.from) ? moment(req.query.from).toDate() : undefined;
+    const toDate:Date = (req.query.to) ? moment(req.query.to).toDate() : undefined;
 
     this.cigaretteService.getUserCigarettes(userFbId, fromDate, toDate)
       .then(cigarettes => res.json(200, cigarettes))
@@ -42,12 +42,12 @@ export default class CigaretteController {
   }
 
   /*
-   * Create a new user.
+   * Save a collection of new cigarettes.
    *
    * @param req  the request.
    * @param res  the response.
    * @param next the next filter.
-   * @returns the created user.
+   * @returns the saved cigarettes.
    */
   public addCigarettes(req: Request, res: Response, next: Next):void {
     logger.info(`[CigaretteController] Smoking for user id = ${res.get('userFbId')}.`);
@@ -60,7 +60,8 @@ export default class CigaretteController {
     this.userService.getUserByFbId(userFbId)
       .then((user:User) => CigaretteMapper.mapMany(user, req))
       .then((cigarettes:Cigarette[]) => this.cigaretteService.addCigarettes(cigarettes))
-      .then(() => res.send(204));
+      .then(() => res.send(204))
+      .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));
   }
 
 }
