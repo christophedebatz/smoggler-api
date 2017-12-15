@@ -51,7 +51,12 @@ You can add one or several cigarette by requesting the user-cigarettes endpoint 
 [
 	{
 		"creationDate": "2016-01-08T00:00:00-06:00",
-		"sentiment": "chilling"
+		"sentiment": "chilling",
+		"coords": {
+			"lng": 48.862725,
+			"lat": 2.2875919444444444
+		}
+			
 	},
 	{
 		"creationDate": "2016-01-08T00:01:00-03:00",
@@ -65,6 +70,7 @@ You can add one or several cigarette by requesting the user-cigarettes endpoint 
 
  > - The `creationDate`parameter is optional. If present the format must respect the ISO-8601 ( https://fr.wikipedia.org/wiki/ISO_8601 ). If not present, it will equals to the current time.
  > - The `sentiment` parameter is optional. If not present, it will remains `NULL`.
+ > - The `coords` parameter is optional. If not present, it will remains `NULL`.
  > - The available sentiments list is:
 
  >  - `happy`
