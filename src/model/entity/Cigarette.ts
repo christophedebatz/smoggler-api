@@ -1,5 +1,6 @@
 import {Entity, ManyToOne, Column, CreateDateColumn, PrimaryGeneratedColumn} from 'typeorm';
 import User from './User';
+import Coords from './Coords';
 
 @Entity()
 export default class Cigarette {
@@ -13,6 +14,9 @@ export default class Cigarette {
   @Column()
   sentiment: string;
 
+  @Column(type => Coords)
+  coords: Coords;
+
   @CreateDateColumn({ name: "creation_date" })
   creationDate: Date;
 
@@ -20,15 +24,15 @@ export default class Cigarette {
 
 export const Sentiment = {
 
-  HAPPY: 'HPY',
+  HAPPY: 'happy',
 
-  DRUNK: 'DRK',
+  DRUNK: 'drunk',
 
-  NOSTALGIC: 'NTG',
+  NERVOUS: 'nervous',
 
-  SICK: 'SCK',
+  SICK: 'sick',
 
-  NOT_HAPPY: 'NHP',
+  NOT_HAPPY: 'not-happy',
 
-  CHILLING: 'CHL'
+  CHILLING: 'chilling'
 };

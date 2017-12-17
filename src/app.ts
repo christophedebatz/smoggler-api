@@ -23,8 +23,8 @@ api.use(authFilter.authenticateUser);
 
 fs.readdirSync(__dirname + '/route').forEach((routeFile: string): void => {
   if (routeFile.substr(-3) === '.js') {
-    const routes = require(__dirname + '/route/' + routeFile);
-    routes.route.initialize(api);
+    const routes = require(__dirname + '/route/' + routeFile).routes;
+    routes.initialize(api);
   }
 });
 

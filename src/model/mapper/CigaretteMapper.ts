@@ -31,6 +31,9 @@ export default class CigaretteMapper {
     if (input.sentiment) {
       cigarette.sentiment = CigaretteMapper.mapSentiment(input.sentiment.toString());
     }
+    if (input.coords && input.coords.lng && input.coords.lat) {
+      cigarette.coords = input.coords;
+    }
     cigarette.creationDate = new Date();
     return cigarette;
   }
@@ -42,8 +45,8 @@ export default class CigaretteMapper {
           return Sentiment.HAPPY;
         case 'not-happy':
           return Sentiment.NOT_HAPPY;
-        case 'nostalgic':
-          return Sentiment.NOSTALGIC;
+        case 'nervous':
+          return Sentiment.NERVOUS;
         case 'chilling':
           return Sentiment.CHILLING;
         case 'drunk':
