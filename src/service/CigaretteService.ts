@@ -7,9 +7,11 @@ import ServiceException, { ServiceErrorCodes } from './exception/ServiceExceptio
 import UserMapper from '../model/mapper/UserMapper';
 import * as moment from 'moment';
 
-export default class UserService {
+export default class CigaretteService {
 
-  private static MAX_DAYS_QUERY = 10;
+  private static MAX_DAYS_QUERY:number = 10;
+
+  private static MAX_ITEMS_COMMAND:number = 500;
 
   /*
    * Returns the user cigarettes for a period.
@@ -20,10 +22,10 @@ export default class UserService {
   public getUserCigarettes(userFbId:string, from:Date, to:Date):Promise<Cigarette[]> {
     const duration:number = moment.duration(moment(to).diff(moment(from))).asDays();
 
-    if (duration > UserService.MAX_DAYS_QUERY) {
+    if (duration > CigaretteService.MAX_DAYS_QUERY) {
       throw ServiceException.create(
         ServiceErrorCodes.INVALID_INPUT_RANGE,
-        `You can fetch a maximum of ${UserService.MAX_DAYS_QUERY} day(s) of data.`
+        `You can fetch a maximum of ${CigaretteService.MAX_DAYS_QUERY} day(s) of data.`
       );
     }
 
@@ -37,10 +39,11 @@ export default class UserService {
    * @returns the saved cigarettes.
    */
   public addCigarettes(cigarettes:Cigarette[]):Promise<Cigarette[]> {
-    if (cigarettes.length > 500) {
+    const maxItems:number = CigaretteService.MAX_ITEMS_COMMAND;
+    if (cigarettes.length > maxItems) {
       throw ServiceException.create(
         ServiceErrorCodes.TOO_MANY_ITEMS,
-        'You can push maximum 500 items per request.'
+        `You can push maximum ${maxItems} items per request.`
       );
     }
 

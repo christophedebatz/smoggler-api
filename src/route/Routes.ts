@@ -2,7 +2,7 @@ import * as restify from 'restify';
 import UserController from '../controller/UserController';
 import CigaretteController from '../controller/CigaretteController';
 
-module.exports.route = {
+module.exports.routes = {
 
   initialize(api:restify.Server) {
     const userController:UserController = new UserController();
