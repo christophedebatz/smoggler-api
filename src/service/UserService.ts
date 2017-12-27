@@ -17,17 +17,23 @@ export default class UserService {
     if (user && user.email && user.fbId && user.fbAccessToken) {
       return UserDao.getByEmailAndFbId(user.email, user.fbId)
         .then(dbUser => {
+          let promise;
           if (dbUser) {
-            throw new ServiceException(ServiceErrorCodes.USER_CREATION_DUPLICATE);
+            if (dbUser.fbAccessToken !== user.fbAccessToken) {
+              promise = UserDao.updateUserFbAccessToken(user)
+            } else {
+              throw new ServiceException(ServiceErrorCodes.USER_CREATION_DUPLICATE);
+            }
+          } else {
+            promise = UserDao.createUser(user);
           }
-          return UserDao.createUser(user)
+          return promise
             .catch(err => {
               console.log('Error while creating new user.', err);
               throw new ServiceException(ServiceErrorCodes.USER_CREATION_ERROR, err.message);
             });
         });
     }
-
     return Promise.reject(new ServiceException(ServiceErrorCodes.EMPTY_INPUT));
   }
 
