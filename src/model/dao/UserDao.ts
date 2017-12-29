@@ -37,6 +37,19 @@ export const UserDao = {
         return await userRepository.findOne({ fbId });
       });
   },
+  
+  updateUserFbAccessToken(dbUser:User, fbAccessToken:string) {
+    if (fbAccessToken) {
+      return Database.getInstance()
+        .then(async connection => {
+          const userRepository = connection.getRepository(User);
+          dbUser.fbAccessToken = fbAccessToken;
+          await userRepository.save(dbUser);
+          return dbUser;
+        });
+      }
+      return Promise.reject(new Error('null.access.token'));
+  },
 
   /**
    * Saves and returns a new user.
