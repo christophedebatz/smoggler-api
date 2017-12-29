@@ -3,9 +3,9 @@ import {Column} from 'typeorm';
 export default class Coords {
 
   @Column()
-  lat: number;
+  lat: string;
 
   @Column()
-  lng: number;
+  lng: string;
 
 }

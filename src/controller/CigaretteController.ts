@@ -62,6 +62,7 @@ export default class CigaretteController {
 
     this.userService.getUserByFbId(userFbId)
       .then((user:User) => CigaretteMapper.mapMany(user, req))
+      .then((cigarettes:Cigarette[]) => { console.log('cig=', JSON.stringify(cigarettes)); return cigarettes; })
       .then((cigarettes:Cigarette[]) => this.cigaretteService.addCigarettes(cigarettes))
       .then(() => res.send(204))
       .catch(err => res.json(err.status, new ApiException(err.message, err.cause)));

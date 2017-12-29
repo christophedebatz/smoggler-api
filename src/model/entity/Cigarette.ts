@@ -11,8 +11,8 @@ export default class Cigarette {
   @ManyToOne(type => User, user => user.cigarettes)
   user:User;
 
-  @Column()
-  sentiment: string;
+  @Column({ nullable: true })
+  sentiment: Sentiment;
 
   @Column(type => Coords)
   coords: Coords;
@@ -22,17 +22,17 @@ export default class Cigarette {
 
 }
 
-export const Sentiment = {
+export enum Sentiment {
 
-  HAPPY: 'happy',
+  HAPPY = 'happy',
 
-  DRUNK: 'drunk',
+  DRUNK = 'drunk',
 
-  NERVOUS: 'nervous',
+  NERVOUS = 'nervous',
 
-  SICK: 'sick',
+  SICK = 'sick',
 
-  NOT_HAPPY: 'not-happy',
+  NOT_HAPPY = 'not-happy',
 
-  CHILLING: 'chilling'
+  CHILLING = 'chilling'
 };

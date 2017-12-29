@@ -17,7 +17,7 @@ export default class UserService {
     if (user && user.email && user.fbId && user.fbAccessToken) {
       return UserDao.getByEmailAndFbId(user.email, user.fbId)
         .then(dbUser => {
-          let promise;
+          let promise:Promise<User>;
           if (dbUser) {
             if (dbUser.fbAccessToken !== user.fbAccessToken) {
               promise = UserDao.updateUserFbAccessToken(dbUser, user.fbAccessToken)

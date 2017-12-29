@@ -8,6 +8,8 @@ export default class CigaretteMapper {
     if (request.body && user) {
       const cigarettes = request.body.cigarettes;
 
+      console.log('request.body=', JSON.stringify(request.body));
+
       if (cigarettes && cigarettes.length > 0) {
         const results:Cigarette[] = [];
         cigarettes.forEach((cigarette:any) => {
@@ -38,7 +40,7 @@ export default class CigaretteMapper {
     return cigarette;
   }
 
-  private static mapSentiment(input:string):string {
+  private static mapSentiment(input:string):Sentiment {
     if (input) {
       switch (input.toLowerCase()) {
         case 'happy':
