@@ -21,11 +21,14 @@ export default class UserService {
           if (dbUser) {
             if (dbUser.fbAccessToken !== user.fbAccessToken) {
               promise = UserDao.updateUserFbAccessToken(dbUser, user.fbAccessToken)
+              .then(u => { console.log('updating user'); return u; })
             } else {
               throw new ServiceException(ServiceErrorCodes.USER_CREATION_DUPLICATE);
             }
           } else {
-            promise = UserDao.createUser(user);
+            console.log('creating new user');
+            promise = UserDao.createUser(user)
+            .then(u => { console.log('creating user'); return u; })
           }
           return promise
             .catch(err => {

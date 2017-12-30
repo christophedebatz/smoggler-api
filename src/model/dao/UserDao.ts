@@ -43,10 +43,11 @@ export const UserDao = {
       return Database.getInstance()
         .then(async connection => {
           const userRepository = connection.getRepository(User);
-          dbUser.fbAccessToken = fbAccessToken;
-          dbUser.updateDate = new Date();
-          await userRepository.save(dbUser);
-          return dbUser;
+          let user:User = await userRepository.findOneById(dbUser.id);
+          user.fbAccessToken = fbAccessToken;
+          user.updateDate = new Date();
+          await userRepository.save(user);
+          return user;
         });
       }
       return Promise.reject(new Error('null.access.token'));
