@@ -8,7 +8,11 @@ export const Database = {
     if (instance === null) {
       instance = createConnection({
         type: 'mariadb',
+<<<<<<< HEAD
         host: '172.18.0.1',
+=======
+        host: '172.18.0.2',
+>>>>>>> feat(route): change routes
         port: 3306,
         username: 'root',
         password: 'H4DdGD6dqb6BBDNSsvqsdjqd,m',
