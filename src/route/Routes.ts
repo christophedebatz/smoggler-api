@@ -9,12 +9,12 @@ module.exports.routes = {
     const cigaretteController:CigaretteController = new CigaretteController();
 
     // public resources
-    api.post('/api/users', userController.createUser);
+    api.post('/users', userController.createUser);
 
     // protected resources
-    api.get('/api/me', userController.getUser);
-    api.get('/api/me/cigarettes', cigaretteController.getUserCigarettes);
-    api.post('/api/me/cigarettes', cigaretteController.addCigarettes);
+    api.get('/me', userController.getUser);
+    api.get('/me/cigarettes', cigaretteController.getUserCigarettes);
+    api.post('/me/cigarettes', cigaretteController.addCigarettes);
   }
 
 };

@@ -8,10 +8,10 @@ export const Database = {
     if (instance === null) {
       instance = createConnection({
         type: 'mariadb',
-        host: 'localhost',
-        port: 3307,
+        host: '172.18.0.1',
+        port: 3306,
         username: 'root',
-        password: '',
+        password: 'H4DdGD6dqb6BBDNSsvqsdjqd,m',
         database: 'smoggler',
         entities: [  __dirname + '/../entity/*.js' ],
         synchronize: true
