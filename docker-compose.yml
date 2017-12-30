@@ -10,7 +10,6 @@ services:
     environment:
       #- ALLOW_EMPTY_PASSWORD=yes
       - MARIADB_ROOT_PASSWORD=H4DdGD6dqb6BBDNSsvqsdjqd,m
-
 volumes:
   mariadb_data:
     driver: local
