@@ -8,7 +8,7 @@ import UserMapper from '../model/mapper/UserMapper';
 export default class UserService {
 
   /*
-   * Creates a new user with constistancy checks before.
+   * Create a new user with constistancy checks before.
    *
    * @param user the user to store.
    * @returns the created user.
@@ -17,27 +17,37 @@ export default class UserService {
     if (user && user.email && user.fbId && user.fbAccessToken) {
       return UserDao.getByEmailAndFbId(user.email, user.fbId)
         .then(dbUser => {
-          let promise:Promise<User>;
           if (dbUser) {
-            if (dbUser.fbAccessToken !== user.fbAccessToken) {
-              promise = UserDao.updateUserFbAccessToken(dbUser, user.fbAccessToken)
-              .then(u => { console.log('updating user'); return u; })
-            } else {
-              throw new ServiceException(ServiceErrorCodes.USER_CREATION_DUPLICATE);
-            }
-          } else {
-            console.log('creating new user');
-            promise = UserDao.createUser(user)
-            .then(u => { console.log('creating user'); return u; })
+            throw new ServiceException(ServiceErrorCodes.USER_CREATION_DUPLICATE);
           }
-          return promise
-            .catch(err => {
-              console.log('Error while creating new user.', err);
-              throw new ServiceException(ServiceErrorCodes.USER_CREATION_ERROR, err.message);
-            });
+          return UserDao.createUser(user);
         });
     }
-    return Promise.reject(new ServiceException(ServiceErrorCodes.EMPTY_INPUT));
+    return Promise.reject(
+      new ServiceException(ServiceErrorCodes.EMPTY_INPUT)
+    );
+  }
+  
+  /*
+   * Update given user-id with constistancy checks before.
+   *
+   * @param user the user update request dto.
+   * @returns the updated user.
+   */
+  public updateUser(user:User, userFbId:string):Promise<User> {
+    if (userFbId) {
+      return UserDao.getByEmailAndFbId(user.email, userFbId)
+        .then(dbUser => {
+          if (!dbUser) {
+            throw new ServiceException(ServiceErrorCodes.USER_NOT_FOUND);
+          }
+          let userToSave = UserService.getUpdatedUserToSave(dbUser, user);
+          return UserDao.updateUser(userToSave, dbUser.id);
+        });
+      }
+      return Promise.reject(
+        new ServiceException(ServiceErrorCodes.EMPTY_INPUT)
+      );
   }
 
   /*
@@ -64,7 +74,32 @@ export default class UserService {
           throw new ServiceException(ServiceErrorCodes.USER_NOT_FOUND, err.message);
         });
     }
-    throw new ServiceException(ServiceErrorCodes.USER_NOT_FOUND)
+    return Promise.reject(
+      new ServiceException(ServiceErrorCodes.USER_NOT_FOUND)
+    );
+  }
+
+
+  private static getUpdatedUserToSave(dbUser:User, updatedUser:User):User {
+    if (updatedUser.email !== dbUser.email) {
+      dbUser.email = updatedUser.email;
+    }
+    if (updatedUser.fbAccessToken !== dbUser.fbAccessToken) {
+      dbUser.fbAccessToken = updatedUser.fbAccessToken
+    }
+    if (updatedUser.fbAccessTokenExpirationDate !== dbUser.fbAccessTokenExpirationDate) {
+      dbUser.fbAccessTokenExpirationDate = updatedUser.fbAccessTokenExpirationDate
+    }
+    if (updatedUser.firstName !== dbUser.firstName) {
+      dbUser.firstName = updatedUser.firstName;
+    }
+    if (updatedUser.lastName !== dbUser.lastName) {
+      dbUser.lastName = updatedUser.lastName;
+    }
+    if (updatedUser.pictureUrl !== dbUser.pictureUrl) {
+      dbUser.pictureUrl = updatedUser.pictureUrl;
+    }
+    return dbUser;
   }
 
 }

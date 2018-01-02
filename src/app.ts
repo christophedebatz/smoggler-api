@@ -1,18 +1,16 @@
 import * as fs from 'fs';
 import 'reflect-metadata';
 import * as restify from 'restify';
-import { settings } from './config/config';
+import config from './config/config';
 import { logger } from './service/logger';
 import ApiException from './controller/exception/ApiException';
 import { Database } from './model/dao/Database';
 import UserAuthFilter from './filter/UserAuthFilter'
 
-export const api = restify.createServer({
-  name: settings.name
-});
+export const api = restify.createServer({ name: config.name});
 
 let authFilter:UserAuthFilter = new UserAuthFilter();
-Database.getInstance(); // initializz database instance
+Database.getInstance(); // initialize database instance
 
 api.pre(restify.pre.sanitizePath());
 api.use(restify.plugins.acceptParser(api.acceptable));
@@ -28,14 +26,14 @@ fs.readdirSync(__dirname + '/route').forEach((routeFile: string): void => {
   }
 });
 
+api.listen(config.port, (): void => {
+  logger.info(`INFO: ${config.name} is running at ${api.url}`);
+});
+
 api.on('uncaughtException', (req, res, route, err) => {
-  console.err('error = ', err);
+  console.error('error = ', err);
 });
 
 api.on('unhandledRejection', (reason, p) => {
-  console.err(reason, 'Unhandled Rejection at Promise', p);
-});
-
-api.listen(settings.port, (): void => {
-  logger.info(`INFO: ${settings.name} is running at ${api.url}`);
+  console.error(reason, 'Unhandled Rejection at Promise', p);
 });

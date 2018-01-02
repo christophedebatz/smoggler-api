@@ -8,6 +8,8 @@ export const ServiceErrorCodes = {
 
   INVALID_INPUT_RANGE: { name: 'invalid.input.range', code: 400 },
 
+  INVALID_INPUT_VALUE: { name: 'invalid.input.value', code: 400 },
+
   TOO_MANY_ITEMS: { name: 'too.many.items', code: 400 },
 
   EMPTY_INPUT: { name: 'user.create.empty', code: 400 },

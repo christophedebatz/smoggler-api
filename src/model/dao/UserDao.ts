@@ -38,14 +38,19 @@ export const UserDao = {
       });
   },
 
-  updateUserFbAccessToken(dbUser:User, fbAccessToken:string) {
-    if (fbAccessToken) {
+  updateUser(newUser:User, userId:number) {
+    if (newUser && userId && !isNaN(userId)) {
       return Database.getInstance()
         .then(async connection => {
           const userRepository = connection.getRepository(User);
-          let user:User = await userRepository.findOneById(dbUser.id);
-          user.fbAccessToken = fbAccessToken;
+          let user:User = await userRepository.findOneById(userId);
           user.updateDate = new Date();
+          user.lastName = newUser.lastName;
+          user.firstName = newUser.firstName;
+          user.fbAccessToken = newUser.fbAccessToken;
+          user.fbAccessTokenExpirationDate = newUser.fbAccessTokenExpirationDate;
+          user.email = newUser.email;
+          user.pictureUrl = newUser.pictureUrl;
           await userRepository.save(user);
           return user;
         });
