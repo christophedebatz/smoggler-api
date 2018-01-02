@@ -29,7 +29,11 @@ fs.readdirSync(__dirname + '/route').forEach((routeFile: string): void => {
 });
 
 api.on('uncaughtException', (req, res, route, err) => {
-    console.log('error = ', err);
+  console.err('error = ', err);
+});
+
+api.on('unhandledRejection', (reason, p) => {
+  console.err(reason, 'Unhandled Rejection at Promise', p);
 });
 
 api.listen(settings.port, (): void => {
