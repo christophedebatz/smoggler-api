@@ -4,7 +4,7 @@ import * as restify from 'restify';
 import config from './config/config';
 import { logger } from './service/logger';
 import ApiException from './controller/exception/ApiException';
-import { Database } from './model/dao/Database';
+import { Database } from './model/Database';
 import UserAuthFilter from './filter/UserAuthFilter'
 
 export const api = restify.createServer({ name: config.name});

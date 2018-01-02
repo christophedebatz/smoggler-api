@@ -1,4 +1,4 @@
-import { Database } from './Database';
+import { Database } from '../Database';
 import { SelectQueryBuilder } from 'typeorm';
 import Cigarette from '../entity/Cigarette';
 import User from '../entity/User';

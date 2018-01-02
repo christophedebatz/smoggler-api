@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { createConnection, Connection } from 'typeorm';
-import config from '../../config/config';
+import config from '../config/config';
 
 let instance:Promise<Connection> = null;
 

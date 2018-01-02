@@ -1,4 +1,4 @@
-import { Database } from './Database';
+import { Database } from '../Database';
 import User from '../entity/User';
 
 export const UserDao = {
