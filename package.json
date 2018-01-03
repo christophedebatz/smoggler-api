@@ -16,7 +16,6 @@
     "@types/node": "^8.0.30",
     "@types/restify": "^5.0.4",
     "@types/sinon": "^1.16.31",
-    "@types/uuid": "^3.4.2",
     "debug": "^2.6.8",
     "dtrace-provider": "^0.8.5",
     "gulp": "^3.9.1",
@@ -30,7 +29,6 @@
     "reflect-metadata": "^0.1.10",
     "restify": "^5.2.0",
     "typeorm": "^0.1.0-alpha.47",
-    "typescript": "^2.5.2",
-    "uuid": "^3.1.0"
+    "typescript": "^2.5.2"
   }
 }
